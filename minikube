@@ -1,0 +1,7 @@
+minikube start
+
+kubectl create deployment mynginx --image=nginx
+
+kubectl get deployments
+
+kubectl expose deployment mynginx --type=NodePort --port=80 --target-port=80
