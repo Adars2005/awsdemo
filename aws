@@ -27,6 +27,7 @@ ssh -i "MyKeyPair.pem" ubuntu@<Public-IP>
 3. Update System & Install Packages (APT version)
 sudo apt update -y
 sudo apt upgrade -y
+sudo apt install git
 sudo apt install -y docker.io git nano
 
 
