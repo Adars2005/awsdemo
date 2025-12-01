@@ -74,3 +74,5 @@ http://<Public-IP>
 
 
 You should see “Hello from AWS EC2!”
+
+got to http:ipv4 address
