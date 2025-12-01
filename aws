@@ -1,0 +1,75 @@
+1. Launch EC2 Instance
+
+Open EC2 → Launch Instance
+
+Name: MyWebAppInstance
+
+AMI: Ubuntu Server 22.04 LTS
+
+Instance type: t2.micro
+
+Key pair: Create & download .pem
+
+Security Group:
+
+Allow SSH (22)
+
+Allow HTTP (80)
+
+Allow HTTPS (443)
+
+Launch instance
+
+2. Connect via SSH
+chmod 400 MyKeyPair.pem
+ssh -i "MyKeyPair.pem" ubuntu@<Public-IP>
+
+3. Update System & Install Packages (APT version)
+sudo apt update -y
+sudo apt upgrade -y
+sudo apt install -y docker.io git nano
+
+
+Start Docker & enable on boot:
+
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo usermod -aG docker ubuntu
+
+
+Reconnect SSH to activate group permissions.
+
+4. Create Sample Web App
+mkdir mywebapp
+cd mywebapp
+echo "<h1>Hello from AWS EC2!</h1>" > index.html
+
+Dockerfile
+nano Dockerfile
+
+
+Paste:
+
+FROM alpine:latest
+RUN apk --no-cache add nginx
+COPY index.html /usr/share/nginx/html/index.html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+
+5. Build & Run Docker Container
+docker build -t mywebapp-image .
+docker run -d -p 80:80 --name mywebapp-container mywebapp-image
+
+
+Check container:
+
+docker ps
+
+6. Test in Browser
+
+Open:
+
+http://<Public-IP>
+
+
+You should see “Hello from AWS EC2!”
