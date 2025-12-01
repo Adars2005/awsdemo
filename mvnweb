@@ -1,0 +1,13 @@
+1. Go to- > File - > New -> Maven Project->Next
+2. Select the org.apache.maven.archetypes with maven-archetype-webapp and click Next
+3. Provide the Group id , Artifact id(file name) and click Finish, Maven web Project is created
+4. Here the  project created , Check for index .jsp file containing Hello Welcome to maven web
+5. In pom.xml add the dependencies as shown below.
+6. To run the project right click and Run as Maven Clean - It clears out the existing classes  previous one . Here we can  see the console for Build Success.
+7. Now again run the project right click  and Run as Maven Install – to add artifacts  to the project
+8. Again run the project Maven test – to test the project
+9. Now  run the project Run as Maven Build – it creates JAR/WAR files to the project
+10. Here specify the goals -> they clean install test or Package ,click -> Apply & Run
+11. Now run the project as Run on server 
+12. Here we have to select the tomcat server 9.0 ,Click -> Finish
+13  we can see output in browser
