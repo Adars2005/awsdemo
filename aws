@@ -58,8 +58,8 @@ EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 
 5. Build & Run Docker Container
-docker build -t mywebapp-image .
-docker run -d -p 80:80 --name mywebapp-container mywebapp-image
+sudo docker build -t mywebapp-image .
+sudo docker run -d -p 80:80 --name mywebapp-container mywebapp-image
 
 
 Check container:
