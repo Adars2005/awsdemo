@@ -1,0 +1,858 @@
+✅ SET 1 Solutions
+1. JS Program to Perform Bubble Sort
+function bubbleSort(arr) {
+    let n = arr.length;
+    for (let i = 0; i < n - 1; i++) {
+        for (let j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                // swap
+                let temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+    return arr;
+}
+
+// Test
+let numbers = [64, 34, 25, 12, 22, 11, 90];
+console.log("Sorted array:", bubbleSort(numbers));
+
+2. ExpressJS Program: Fetch Student Details Using Roll Number
+📌 server.js
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Sample Student Database
+const students = {
+    101: { name: "John", branch: "CSE", marks: 85 },
+    102: { name: "Riya", branch: "ECE", marks: 92 },
+    103: { name: "Arjun", branch: "IT", marks: 78 }
+};
+
+// Show form
+app.get('/', (req, res) => {
+    res.send(`
+        <h2>Search Student Details</h2>
+        <form action="/student" method="POST">
+            Roll No: <input type="text" name="roll"><br><br>
+            <button type="submit">Get Details</button>
+        </form>
+    `);
+});
+
+// Fetch by roll number
+app.post('/student', (req, res) => {
+    const roll = req.body.roll;
+    const student = students[roll];
+
+    if (student) {
+        res.send(`
+            <h2>Student Details</h2>
+            Name: ${student.name}<br>
+            Branch: ${student.branch}<br>
+            Marks: ${student.marks}<br>
+        `);
+    } else {
+        res.send("<h3>No student found with this Roll Number</h3>");
+    }
+});
+
+app.listen(3000, () => {
+    console.log("Server running on port 3000");
+});
+
+
+✔️ SET 1 Completed.
+Tell me "continue" and I will give SET 2.
+
+You said:
+yes
+ChatGPT said:
+
+Great! Here are the SET 2 solutions.
+
+✅ SET 2 Solutions
+1. JS Program to List the Properties of a JavaScript Object
+const student = {
+    name: "John",
+    age: 20,
+    course: "B.Tech",
+    roll: 101
+};
+
+console.log("Properties of the object:");
+console.log(Object.keys(student));
+
+2. NodeJS Program to Read From a File and Display Content
+readfile.js
+const fs = require('fs');
+const filename = 'sample.txt';
+
+fs.readFile(filename, 'utf8', (err, data) => {
+    if (err) {
+        console.log("Error reading file:", err);
+        return;
+    }
+    console.log("File Content:\n");
+    console.log(data);
+});
+
+Create sample.txt
+Hello, this is a sample file.
+This content will be read by the NodeJS program.
+
+
+✔️ SET 2 Completed.
+Say "continue" for SET 3.
+
+You said:
+yes
+ChatGPT said:
+
+Great! Here are the SET 3 solutions.
+
+✅ SET 3 Solutions
+1. JS/HTML Program to Take Name, Roll No, Marks and Display GPA in a Table
+index.html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GPA Calculator</title>
+</head>
+<body>
+    <h2>Student GPA Calculator</h2>
+
+    <form onsubmit="displayData(event)">
+        Name: <input type="text" id="name"><br><br>
+        Roll No: <input type="text" id="roll"><br><br>
+        Marks (0–100): <input type="number" id="marks"><br><br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <h3>Result:</h3>
+    <table border="1" cellpadding="10">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Roll No</th>
+                <th>Marks</th>
+                <th>GPA</th>
+            </tr>
+        </thead>
+        <tbody id="resultTable"></tbody>
+    </table>
+
+    <script>
+        function calculateGPA(marks) {
+            if (marks >= 90) return 4.0;
+            if (marks >= 80) return 3.0;
+            if (marks >= 70) return 2.0;
+            if (marks >= 60) return 1.0;
+            return 0.0;
+        }
+
+        function displayData(event) {
+            event.preventDefault();
+
+            let name = document.getElementById("name").value;
+            let roll = document.getElementById("roll").value;
+            let marks = parseInt(document.getElementById("marks").value);
+            let gpa = calculateGPA(marks);
+
+            let table = document.getElementById("resultTable");
+            table.innerHTML = `
+                <tr>
+                    <td>${name}</td>
+                    <td>${roll}</td>
+                    <td>${marks}</td>
+                    <td>${gpa}</td>
+                </tr>
+            `;
+        }
+    </script>
+
+</body>
+</html>
+
+2. Simple Website for CRUD Operations on Student DB Using Express Routing
+server.js
+const express = require('express');
+const app = express();
+app.use(express.json());
+
+let students = [
+    { id: 1, name: "John", marks: 85 },
+    { id: 2, name: "Riya", marks: 90 }
+];
+
+// CREATE
+app.post('/students', (req, res) => {
+    const student = req.body;
+    students.push(student);
+    res.send("Student added successfully!");
+});
+
+// READ
+app.get('/students', (req, res) => {
+    res.json(students);
+});
+
+// UPDATE
+app.put('/students/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const updated = req.body;
+
+    students = students.map(s => s.id === id ? updated : s);
+    res.send("Student updated successfully!");
+});
+
+// DELETE
+app.delete('/students/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    students = students.filter(s => s.id !== id);
+    res.send("Student deleted successfully!");
+});
+
+// Routing Example
+app.get('/', (req, res) => {
+    res.send("<h2>Welcome to Student CRUD Website (Express Routing)</h2>");
+});
+
+app.listen(3000, () => console.log("Server running on port 3000"));
+
+
+✔️ SET 3 Completed.
+Say “continue” for SET 4.
+
+You said:
+yes
+ChatGPT said:
+
+Great! Here are the SET 4 solutions.
+
+✅ SET 4 Solutions
+1. JS Program to Implement Quick Sort
+function quickSort(arr) {
+    if (arr.length <= 1) return arr;
+
+    let pivot = arr[arr.length - 1];
+    let left = [];
+    let right = [];
+
+    for (let i = 0; i < arr.length - 1; i++) {
+        if (arr[i] < pivot) {
+            left.push(arr[i]);
+        } else {
+            right.push(arr[i]);
+        }
+    }
+
+    return [...quickSort(left), pivot, ...quickSort(right)];
+}
+
+// Test
+let arr = [34, 7, 23, 32, 5, 62];
+console.log("Sorted Array:", quickSort(arr));
+
+2. Node.js Program: Accept Filename & Text → Append If Exists OR Create New
+appendOrCreate.js
+const fs = require('fs');
+const readline = require('readline');
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+rl.question("Enter filename: ", function(filename) {
+    rl.question("Enter text to write: ", function(text) {
+
+        // Append if file exists, else create new
+        fs.appendFile(filename, text + "\n", (err) => {
+            if (err) {
+                console.log("Error:", err);
+            } else {
+                console.log("Text successfully written!");
+            }
+            rl.close();
+        });
+    });
+});
+
+
+✔️ SET 4 Completed.
+Say “continue” for SET 5.
+
+You said:
+yes
+ChatGPT said:
+
+Great! Here are the SET 5 solutions.
+
+✅ SET 5 Solutions
+1. JS Program to Swap the Case of Each Character in a String
+function swapCase(str) {
+    let result = "";
+
+    for (let ch of str) {
+        if (ch === ch.toUpperCase()) {
+            result += ch.toLowerCase();
+        } else {
+            result += ch.toUpperCase();
+        }
+    }
+
+    return result;
+}
+
+// Test
+console.log(swapCase("Hello WoRLD"));  // hELLO wOrld
+
+2. Create a Student Database in MongoDB With All Details
+Steps + Sample Code (Node.js + Mongoose)
+1️⃣ Install MongoDB & Mongoose
+npm install mongoose
+
+2️⃣ db.js
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost:27017/studentDB')
+    .then(() => console.log("MongoDB Connected"))
+    .catch(err => console.log(err));
+
+3️⃣ Student Model
+const mongoose = require('mongoose');
+
+const studentSchema = new mongoose.Schema({
+    roll: Number,
+    name: String,
+    age: Number,
+    branch: String,
+    marks: Number
+});
+
+module.exports = mongoose.model("Student", studentSchema);
+
+4️⃣ Insert Sample Student Records
+const Student = require('./Student');
+require('./db');
+
+// Insert a student
+const s1 = new Student({
+    roll: 101,
+    name: "John",
+    age: 20,
+    branch: "CSE",
+    marks: 88
+});
+
+s1.save().then(() => {
+    console.log("Student added to DB");
+});
+
+
+✨ You can also insert multiple:
+
+Student.insertMany([
+    { roll: 102, name: "Riya", age: 21, branch: "ECE", marks: 90 },
+    { roll: 103, name: "Arjun", age: 20, branch: "IT", marks: 76 }
+]).then(() => console.log("Multiple students added"));
+
+
+✔️ SET 5 Completed.
+Say “continue” for SET 6.
+
+You said:
+yes
+ChatGPT said:
+
+Great! Here are the SET 6 solutions.
+
+✅ SET 6 Solutions
+1. JS Program to Remove Duplicate Items (Ignore Case)
+function removeDuplicates(arr) {
+    const seen = new Set();
+    const result = [];
+
+    for (let item of arr) {
+        const lower = item.toLowerCase();
+        if (!seen.has(lower)) {
+            seen.add(lower);
+            result.push(item);
+        }
+    }
+    return result;
+}
+
+// Test
+let items = ["Apple", "Banana", "apple", "Orange", "BANANA"];
+console.log(removeDuplicates(items)); 
+// Output: ["Apple", "Banana", "Orange"]
+
+2. Node.js Server That Accepts a Port Number and Runs a Server
+server.js
+const http = require('http');
+const readline = require('readline');
+
+// For taking port input
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+rl.question("Enter port number: ", function(port) {
+
+    const server = http.createServer((req, res) => {
+        res.writeHead(200, { "Content-Type": "text/plain" });
+        res.end("Server is running successfully!");
+    });
+
+    server.listen(port, () => {
+        console.log(`Server running at http://localhost:${port}`);
+    });
+
+    rl.close();
+});
+
+
+✔️ SET 6 Completed.
+Say “continue” for SET 7.
+
+You said:
+yes
+ChatGPT said:
+
+Great! Here are the SET 7 solutions.
+
+✅ SET 7 Solutions
+1. JS Program to Perform Binary Search
+
+Binary Search works only on sorted arrays.
+
+function binarySearch(arr, target) {
+    let left = 0;
+    let right = arr.length - 1;
+
+    while (left <= right) {
+        let mid = Math.floor((left + right) / 2);
+
+        if (arr[mid] === target) {
+            return mid; // found at index mid
+        }
+        else if (arr[mid] < target) {
+            left = mid + 1;
+        }
+        else {
+            right = mid - 1;
+        }
+    }
+
+    return -1; // not found
+}
+
+// Test
+let numbers = [2, 5, 7, 13, 23, 34, 56, 78];
+console.log(binarySearch(numbers, 23)); // Output: index number
+
+2. ExpressJS Form + CRUD Operations on Student DB
+
+Below is a simple ExpressJS server that performs CRUD operations on an in-memory student DB.
+
+server.js
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+
+// In-memory DB
+let students = [
+    { roll: 101, name: "John", marks: 85 },
+    { roll: 102, name: "Riya", marks: 92 }
+];
+
+// Home Form
+app.get("/", (req, res) => {
+    res.send(`
+        <h2>Student CRUD Form</h2>
+        <form action="/add" method="POST">
+            Roll No: <input type="text" name="roll"><br/><br/>
+            Name: <input type="text" name="name"><br/><br/>
+            Marks: <input type="text" name="marks"><br/><br/>
+            <button type="submit">Add Student</button>
+        </form>
+        <br><a href="/students">View All Students</a>
+    `);
+});
+
+// CREATE
+app.post("/add", (req, res) => {
+    const { roll, name, marks } = req.body;
+    students.push({ roll: parseInt(roll), name, marks: parseInt(marks) });
+    res.send("<h3>Student Added!</h3><a href='/'>Go Back</a>");
+});
+
+// READ ALL
+app.get("/students", (req, res) => {
+    let display = "<h2>Students List</h2><ul>";
+    students.forEach(s => {
+        display += `<li>${s.roll} - ${s.name} - ${s.marks}</li>`;
+    });
+    display += "</ul>";
+    res.send(display);
+});
+
+// UPDATE
+app.put("/update/:roll", (req, res) => {
+    const roll = parseInt(req.params.roll);
+    const updated = req.body;
+
+    students = students.map(s => s.roll === roll ? { ...s, ...updated } : s);
+    res.send("Student Updated!");
+});
+
+// DELETE
+app.delete("/delete/:roll", (req, res) => {
+    const roll = parseInt(req.params.roll);
+    students = students.filter(s => s.roll !== roll);
+    res.send("Student Deleted!");
+});
+
+app.listen(3000, () => console.log("Server running on port 3000"));
+
+
+✔️ SET 7 Completed.
+Say “continue” for SET 8.
+
+You said:
+yes
+ChatGPT said:
+
+Here are the SET 8 solutions.
+
+✅ SET 8 Solutions
+1. JS Program to Read From a JSON Object and Display Data in a Table (HTML + JS)
+index.html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JSON Table Display</title>
+</head>
+<body>
+    <h2>Display JSON Data</h2>
+
+    <table border="1" cellpadding="10">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Roll</th>
+                <th>Marks</th>
+            </tr>
+        </thead>
+        <tbody id="output"></tbody>
+    </table>
+
+    <script>
+        const studentData = [
+            { name: "John", roll: 101, marks: 85 },
+            { name: "Riya", roll: 102, marks: 92 },
+            { name: "Arjun", roll: 103, marks: 78 }
+        ];
+
+        let tableContent = "";
+        studentData.forEach(s => {
+            tableContent += `
+                <tr>
+                    <td>${s.name}</td>
+                    <td>${s.roll}</td>
+                    <td>${s.marks}</td>
+                </tr>
+            `;
+        });
+
+        document.getElementById("output").innerHTML = tableContent;
+    </script>
+</body>
+</html>
+
+2. JS + AJAX Program: Fetch Weather Details Based on Location
+index.html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather Fetch (AJAX)</title>
+</head>
+<body>
+    <h2>Select Location to Get Weather</h2>
+
+    <select id="city" onchange="getWeather()">
+        <option value="">--Select--</option>
+        <option value="London">London</option>
+        <option value="Delhi">Delhi</option>
+        <option value="New York">New York</option>
+    </select>
+
+    <h3>Weather Details:</h3>
+    <div id="result"></div>
+
+    <script>
+        function getWeather() {
+            let city = document.getElementById("city").value;
+            if (city === "") return;
+
+            let xhr = new XMLHttpRequest();
+            xhr.open("GET", `https://api.open-meteo.com/v1/forecast?latitude=28&longitude=77&hourly=temperature_2m`);
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    let data = JSON.parse(xhr.responseText);
+
+                    let temp = data.hourly.temperature_2m[0];
+
+                    document.getElementById("result").innerHTML =
+                        `<b>City:</b> ${city}<br>
+                         <b>Temperature:</b> ${temp}°C`;
+                }
+            };
+            xhr.send();
+        }
+    </script>
+</body>
+</html>
+
+
+⚠️ Note: This example uses Open-Meteo API, which is free and requires no API key.
+
+✔️ SET 8 Completed.
+Say “continue” for SET 9.
+
+You said:
+yes
+ChatGPT said:
+
+Great! Here are the SET 9 solutions.
+
+✅ SET 9 Solutions
+1. JS Program to Check Whether an Object Contains a Given Property
+function hasProperty(obj, property) {
+    return obj.hasOwnProperty(property);
+}
+
+// Test
+let student = { name: "Riya", roll: 102, marks: 90 };
+
+console.log(hasProperty(student, "name"));   // true
+console.log(hasProperty(student, "age"));    // false
+
+2. Simple Website for CRUD Operations on Student DB + Express Routing
+
+This example uses ExpressJS, in-memory array DB, and Routing structure.
+
+📁 Project Structure
+student-app/
+ ├── server.js
+ ├── routes/
+ │     └── studentRoutes.js
+
+routes/studentRoutes.js
+const express = require('express');
+const router = express.Router();
+
+let students = [
+    { roll: 101, name: "John", marks: 85 },
+    { roll: 102, name: "Riya", marks: 92 }
+];
+
+// CREATE
+router.post('/add', (req, res) => {
+    const student = req.body;
+    students.push(student);
+    res.send("Student Added!");
+});
+
+// READ
+router.get('/all', (req, res) => {
+    res.json(students);
+});
+
+// UPDATE
+router.put('/update/:roll', (req, res) => {
+    const roll = parseInt(req.params.roll);
+    const updated = req.body;
+
+    students = students.map(s => s.roll === roll ? updated : s);
+    res.send("Student Updated!");
+});
+
+// DELETE
+router.delete('/delete/:roll', (req, res) => {
+    const roll = parseInt(req.params.roll);
+    students = students.filter(s => s.roll !== roll);
+    res.send("Student Deleted!");
+});
+
+module.exports = router;
+
+server.js
+const express = require('express');
+const app = express();
+const studentRoutes = require('./routes/studentRoutes');
+
+app.use(express.json());
+app.use('/students', studentRoutes);
+
+app.get("/", (req, res) => {
+    res.send("<h1>Student CRUD Website Using Express Routing</h1>");
+});
+
+app.listen(3000, () => {
+    console.log("Server running on port 3000");
+});
+
+
+✔️ SET 9 Completed.
+Say “continue” for SET 10.
+
+You said:
+yes
+ChatGPT said:
+
+Perfect! Here are the SET 10 solutions.
+
+✅ SET 10 Solutions
+1. JS Program to Find the Most Frequent Item in an Array
+function mostFrequent(arr) {
+    let freq = {};
+    let maxCount = 0;
+    let mostFreqItem = null;
+
+    arr.forEach(item => {
+        freq[item] = (freq[item] || 0) + 1;
+
+        if (freq[item] > maxCount) {
+            maxCount = freq[item];
+            mostFreqItem = item;
+        }
+    });
+
+    return mostFreqItem;
+}
+
+// Test
+let arr = [3, 7, 3, 2, 9, 3, 7, 9, 9, 9];
+console.log("Most Frequent Item:", mostFrequent(arr));  // Output: 9
+
+2. ExpressJS Form + CRUD Operations on Student DB (Final CRUD Project)
+
+This is a clean, simple CRUD form-based application.
+
+📁 Project Structure
+student-crud/
+ ├── server.js
+ ├── views/
+ │     ├── index.html
+ │     ├── list.html
+
+views/index.html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Student</title>
+</head>
+<body>
+    <h2>Add Student</h2>
+
+    <form action="/add" method="POST">
+        Roll No: <input type="text" name="roll"><br><br>
+        Name: <input type="text" name="name"><br><br>
+        Marks: <input type="text" name="marks"><br><br>
+        <button type="submit">Add Student</button>
+    </form>
+
+    <br><a href="/students">View Student List</a>
+</body>
+</html>
+
+views/list.html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student List</title>
+</head>
+<body>
+    <h2>All Students</h2>
+    <ul>
+        {{studentList}}
+    </ul>
+    <br><a href="/">Add More Students</a>
+</body>
+</html>
+
+server.js
+const express = require('express');
+const app = express();
+const fs = require('fs');
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+let students = [];
+
+// Home page (Add Form)
+app.get("/", (req, res) => {
+    res.sendFile(__dirname + "/views/index.html");
+});
+
+// ADD student
+app.post("/add", (req, res) => {
+    const { roll, name, marks } = req.body;
+
+    students.push({
+        roll: parseInt(roll),
+        name,
+        marks: parseInt(marks)
+    });
+
+    res.send("<h3>Student Added!</h3><a href='/'>Go Back</a>");
+});
+
+// View all students
+app.get("/students", (req, res) => {
+    let list = "";
+    students.forEach(s => {
+        list += `<li>${s.roll} - ${s.name} - ${s.marks}</li>`;
+    });
+
+    const html = fs.readFileSync(__dirname + "/views/list.html", "utf8");
+    res.send(html.replace("{{studentList}}", list));
+});
+
+// UPDATE student
+app.put("/update/:roll", (req, res) => {
+    const roll = parseInt(req.params.roll);
+    const { name, marks } = req.body;
+
+    students = students.map(s =>
+        s.roll === roll ? { ...s, name, marks } : s
+    );
+
+    res.send("Student Updated!");
+});
+
+// DELETE student
+app.delete("/delete/:roll", (req, res) => {
+    const roll = parseInt(req.params.roll);
+    students = students.filter(s => s.roll !== roll);
+    res.send("Student Deleted!");
+});
+
+app.listen(3000, () => {
+    console.log("Server running on port 3000");
+});
+
+🎉 SET 10 Completed — All Sets Finished!
